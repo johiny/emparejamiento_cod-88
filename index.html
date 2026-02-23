@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Emparejamiento — Robots Cyberpunk</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body oncontextmenu="return false;" ondragstart="return false;">
+  <div id="binary-bg"></div>
+  <div class="scanline"></div>
+  <header>
+    <h1><span class="glitch">NEXO DE ARQUITECTURA</span></h1>
+    <p class="subtitle">ESTADO: Crítico. Conecta los conceptos clave de la estructura del computador para estabilizar el núcleo.</p>
+  </header>
+
+  <main>
+    <div id="game-container">
+      <svg id="cables-svg"></svg>
+      <section id="game">
+        <div class="panel terms">
+          <h2>Puertos de Origen</h2>
+          <ul id="termsList"></ul>
+        </div>
+
+        <div class="panel descriptions">
+          <h2>Terminales de Datos</h2>
+          <ul id="descList"></ul>
+        </div>
+      </section>
+    </div>
+
+    <section id="status">
+      <div id="timer-container">TIEMPO: <span id="timer">60</span>s</div>
+      <div>Acertadas: <span id="score">0</span>/<span id="total">0</span></div>
+      <div id="actions">
+        <button id="verifyBtn">Verificar Conexiones</button>
+        <button id="resetBtn">Reiniciar</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal de Diagnóstico -->
+  <div id="modal-overlay" class="hidden">
+    <div id="modal">
+      <div class="modal-header">
+        <div class="modal-glitch">REPORTE DE DIAGNÓSTICO</div>
+      </div>
+      <div id="modal-content">
+        <!-- Se llena por JS -->
+      </div>
+      <div class="modal-footer">
+        <button id="modalCloseBtn">CONTINUAR OPERACIONES</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

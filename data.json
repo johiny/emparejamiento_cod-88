@@ -1,0 +1,14 @@
+[
+  {"id":"p1","term":"Tiempo de Acceso","description":"Es el tiempo que transcurre desde que una dirección de memoria es visible para los circuitos de la memoria hasta que el dato está almacenado o está disponible para ser utilizado."},
+  {"id":"p2","term":"Memoria Caché","description":"Componente que se coloca como una memoria intermedia entre la memoria principal y el procesador."},
+  {"id":"p3","term":"Acceso Secuencial","description":"Se accede desde la última posición a la que se ha accedido, leyendo en orden todas las posiciones hasta llegar a la posición deseada."},
+  {"id":"p4","term":"Registro","description":"Espacio de memoria que se encuentra dentro del procesador, integrado dentro del mismo chip de este."},
+  {"id":"p5","term":"Procesador","description":"Sistema de propósito general capaz de hacer operaciones aritméticas y lógicas básicas, a partir de las cuales se pueden resolver problemas complejos."},
+  {"id":"p6","term":"Arquitectura de Computador","description":"Conjunto de elementos del computador que son visibles desde el punto de vista del programador."},
+  {"id":"p7","term":"Acceso Directo","description":"Organización en bloques y cada bloque de memoria tiene una dirección única, se accede directamente al principio de un bloque y dentro de este se hace secuencia hasta llegar a la posición de memoria deseada."},
+  {"id":"p8","term":"Memoria Caché","description":"Memorias de capacidad reducida, pero mas rápidas que la memoria principal, utilizan acceso asociativo, se pueden encontrar dentro del chip del procesador o cerca de él."},
+  {"id":"p9","term":"Estructura de Computador","description":"Se refiere a las unidades funcionales del computador y como están interconectadas."},
+  {"id":"p10","term":"Acceso Aleatorio","description":"Se organiza como un vector en el que cada elemento individual tiene una dirección única, se accede a una posición determinada proporcionando la dirección."},
+  {"id":"p11","term":"Memoria Volátil","description":"Necesita de una corriente eléctrica para mantener su estado, incluyen registros, memoria caché y memoria principal."}
+]
+
