@@ -11,7 +11,6 @@ const gameContainer = document.getElementById('game-container');
 
 function startTimer() {
   clearInterval(timerInterval);
-  timeLeft = 60;
   updateTimerUI();
   timerInterval = setInterval(() => {
     timeLeft--;
@@ -31,6 +30,21 @@ function updateTimerUI() {
   } else {
     timerEl.style.color = 'var(--neon-cyan)';
   }
+}
+
+function selectDifficulty() {
+  const diffModal = document.getElementById('difficulty-modal');
+  diffModal.classList.remove('hidden');
+  gameActive = false;
+  clearInterval(timerInterval);
+}
+
+function startGame(seconds) {
+  const diffModal = document.getElementById('difficulty-modal');
+  diffModal.classList.add('hidden');
+  timeLeft = seconds;
+  gameActive = true;
+  startTimer();
 }
 
 function shuffle(a){
@@ -63,9 +77,10 @@ function render(){
   
   activeConnections = [];
   score = 0;
-  gameActive = true;
+  gameActive = false;
   updateScore();
-  startTimer();
+  
+  selectDifficulty();
 
   // Mezclamos el array original primero
   shuffle(pairs);
@@ -112,14 +127,19 @@ function createItem(text, id, type) {
     li.appendChild(label);
   }
 
-  port.addEventListener('mousedown', startCable);
+  // Ahora el evento se asigna a toda la tarjeta (li)
+  li.addEventListener('mousedown', startCable);
   return li;
 }
 
 function startCable(e) {
   if (!gameActive) return;
-  const port = e.target;
-  if (port.classList.contains('connected')) return;
+  
+  // Buscamos el puerto dentro del elemento clickeado (la tarjeta li)
+  const item = e.currentTarget;
+  const port = item.querySelector('.port');
+  
+  if (!port || port.classList.contains('connected')) return;
 
   const rect = port.getBoundingClientRect();
   const containerRect = gameContainer.getBoundingClientRect();
@@ -168,10 +188,14 @@ function moveCable(e) {
 function endCable(e) {
   if (!draggingCable) return;
   
-  const targetPort = document.elementFromPoint(e.clientX, e.clientY);
+  // Detectar el elemento bajo el cursor
+  let dropTarget = document.elementFromPoint(e.clientX, e.clientY);
+  
+  // Si no es el puerto, buscar la tarjeta (li.item) más cercana
+  let targetItem = dropTarget ? dropTarget.closest('.item') : null;
+  let targetPort = targetItem ? targetItem.querySelector('.port') : null;
   
   if (targetPort && 
-      targetPort.classList.contains('port') && 
       !targetPort.classList.contains('connected') &&
       targetPort.dataset.type !== draggingCable.type) {
     
@@ -185,6 +209,10 @@ function endCable(e) {
     
     draggingCable.startPort.classList.add('connected');
     targetPort.classList.add('connected');
+    
+    // También marcamos la tarjeta li como conectada para el estilo
+    draggingCable.startPort.closest('.item').classList.add('connected');
+    targetPort.closest('.item').classList.add('connected');
 
     activeConnections.push({
       termPort: draggingCable.type === 'term' ? draggingCable.startPort : targetPort,
@@ -224,7 +252,7 @@ function verifyConnections() {
 
 function showResultModal() {
   const overlay = document.getElementById('modal-overlay');
-  const content = document.getElementById('modal-content');
+  const content = document.getElementById('result-content');
   const percent = Math.round((score / pairs.length) * 100);
   
   let msg = `Sistemas Sincronizados: <span class="modal-stat">${score} / ${pairs.length}</span>\n`;
@@ -259,11 +287,23 @@ function updateScore() {
 
 document.getElementById('verifyBtn').addEventListener('click', verifyConnections);
 document.getElementById('resetBtn').addEventListener('click', async () => {
+  document.getElementById('modal-overlay').classList.add('hidden');
   initBinaryBg(); // Regenerar fondo binario
   await loadData();
   render();
 });
 
+// Event listeners para dificultad
+document.querySelectorAll('.diff-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const level = btn.dataset.level;
+    let time = 60;
+    if (level === 'easy') time = 60 * 5;
+    if (level === 'normal') time = 60 * 3;
+    if (level === 'hard') time = 60 * 1;
+    startGame(time);
+  });
+});
 
 (async () => {
   initBinaryBg();
